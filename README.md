@@ -9,7 +9,8 @@ User Registration: Allows users to register with a unique username and password.
 User Authentication: Implements a secure login system using password hashing.
 The userdata is saved to a MongoDB database.
 
-### Expense List: Users can manually add, modify, and remove their expenses. The expenses can be filtered and sorttd with the implemented DataTable function. The user has the possibility to either delete or modify expenses one by one or to delete or modify several ones at the same time. Duplicates are marked in the list. The expenses in the list are synchrnised with a collection in MongoDB.
+### Expense List
+Users can manually add, modify, and remove their expenses. The expenses can be filtered and sorttd with the implemented DataTable function. The user has the possibility to either delete or modify expenses one by one or to delete or modify several ones at the same time. Duplicates are marked in the list. The expenses in the list are synchrnised with a collection in MongoDB.
 
 ### Categories
 Provides functionality to manage expense categories. Standard categories can be added or other categories can be added with or without emoji symbols. The categories are then linked to the expense list so that the user has the possibility to add expenses and categorize them.
