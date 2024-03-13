@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.2.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.3.2.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.3.2.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.3.2.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.3.2.min.js"></script>
+    <!-- <link href="/static/styles.css" rel="stylesheet"> -->
+
+    <!-- Include DataTables and jQuery to make tables sortable-->
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- SheetJS (Excel library) -->
+    <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+    <title>MoneySnap - {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+    <nav class="bg-secondary-subtle border navbar navbar-expand-md">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><span style="font-size: 1.4em">💸</span>MoneySnap</a>
+            <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                {% if session["user_id"] %}
+                <ul class="navbar-nav nav-underline mx-2 mt-2">
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/import' %}active{% endif %}" href="/import">Import</a></li>
+                </ul>
+                <ul class="navbar-nav nav-underline mx-2 mt-2">
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/list' %}active{% endif %}" href="/list">List</a></li>
+                </ul>
+                <ul class="navbar-nav nav-underline mx-2 mt-2">
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Diagram</a></li>
+                </ul>
+                <ul class="navbar-nav nav-underline mx-2 mt-2">
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/categories' %}active{% endif %}" href="/categories">Categories</a></li>
+                </ul>
+                <ul class="navbar-nav nav-underline mx-2 mt-2">
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/exchange' %}active{% endif %}" href="/exchange">Exchange rates</a></li>
+                </ul>
+                <ul class="navbar-nav nav-underline ms-auto mt-2">
+                    <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                </ul>
+                {% else %}
+                <ul class="navbar-nav nav-underline ms-auto mt-2">
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/register' %}active{% endif %}" href="/register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.path == '/login' %}active{% endif %}" href="/login">Log In</a></li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% if get_flashed_messages() %}
+    <header>
+        <div class="alert alert-primary mb-0 text-center" role="alert">
+            {{ get_flashed_messages() | join(" ") }}
+        </div>
+    </header>
+    {% endif %}
+
+    <main class="container-md mt-5">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+
+
+</html>

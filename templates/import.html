@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Import expenses
+{% endblock %}
+
+{% block content %}
+<h5>Info:</h5>
+<ul class="mb-5">
+    <li>Here you can import expenses from external files</li>
+    <li>Supported file formats: .xls, .xlsx, .csv</li>
+    <li>Choose file, Enter header row number, Import from file, Copy to expense list</li>
+    <li>Make sure date is provided in format YYYY-MM-DD</li>
+    <li>Amount can have comma or point before decimals</li>
+    <li>Currencies need to be one of the following: {{ currencies.keys() | join(', ') }}</li>
+</ul>
+
+    <input class="form-control w-75" type="file" id="fileInput" accept=".xlsx, .xls, .csv" required>
+    
+    <div class="input-group mb-3 mt-3 w-50">
+        <span class="input-group-text">Choose row number of header in import file</span>
+        <input type="number" id="headerRowNo" class="form-control" value="1" min="1" required>
+    </div>
+    <div class="input-group mb-3 mt-3 w-50">
+        <span class="input-group-text">Choose last row number to import (0 for all rows)</span>
+        <input type="number" id="lastRowNo" class="form-control" value="0" min="0" required>
+    </div>
+    <button class="btn btn-success w-75 mb-5" id="importButton">Import expenses from file - for preview in table below</button>
+
+
+<form id="expenseListForm" action="/import" method="post" >
+    <div class="input-group mb-3 mt-3">
+        <span class="input-group-text">Choose currency for expenses</span>
+        <select class="form-control" id="org_currency" name="org_currency" disabled required>
+            <option value="fromTable" disabled id="takeOverFromTableOption">Take over currency from preview table</option>
+            {% for key, value in currencies.items() %}
+            <option value="{{ key }}">Set {{ key }} for all</option>
+            {% endfor %}
+        </select>
+        <!-- Creates a hidden input field and sends it to app.py -->
+        <button class="btn btn-secondary" id="copyToExpenseListButton" type="submit" disabled>Copy previewed expenses to expense list</button>
+    </div>
+
+    <table id="importTable" class="display mt-3" style="width:100%">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Currency (optional)</th>
+                <th>Category (optional)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be added here dynamically -->
+        </tbody>
+    </table>
+
+
+</form>
+
+<!-- Modal for column mapping -->
+<div class="modal fade" id="columnMappingModal" tabindex="-1" role="dialog" aria-labelledby="columnMappingModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="columnMappingModalLabel">Column Mapping</h5>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Corresponding column in file</th>
+                        </tr>
+                    </thead>
+                    <tbody id="columnMappingBody">
+                        <!-- Column mapping rows will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="applyMappingButton">Apply Mapping</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/import.js"></script>
+
+{% endblock %}

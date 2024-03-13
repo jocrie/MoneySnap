@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Exchange rates
+{% endblock %}
+
+{% block content %}
+<h5>Info:</h5>
+<ul>
+    <li>Exchange rates retrieved from api.exchangerate-api.com</li>
+    <li>API values from (updates once per day): {% if lastUpdate %}{{ lastUpdate.strftime('%Y-%m-%d %H:%M:%S') }}{% else %}<span style="color: red;">API update failed</span>{% endif %}</li>
+</ul>
+
+<div class="mt-5 mx-3">
+
+    <form action="/exchange" method="post" class="mt-3">
+        <div>
+            <label for="baseCurrency">Base currency:</label>
+                <select class="form-control mb-3" id="base_currency" name="base_currency">
+                {% for key, value in currencies.items() %}
+                    <option value="{{ key }}">{{ key }} - {{ value }}</option>
+                {% endfor %} 
+                </select>
+            <button class="btn btn-primary mb-3" type="submit" name="action" value="setBaseCurrency">Set base currency and update exchange values</button>
+            
+        </div>
+    </form>
+
+    <div class="mt-5 mb-5 ">
+        <h5>Chosen base currency: {{baseCurrency}}</h1>
+    </div>
+
+    <div">
+        <table class="table table-hover">
+            <tbody>
+                {% for key, value in rates.items() %}
+                <tr>
+                    <td> <h5>{{ key }}</h5> </td>
+                    <td> <h5>{{ value }}</h5> </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

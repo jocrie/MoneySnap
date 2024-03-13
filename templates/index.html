@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block content %}
+
+    <h5>Info:</h5>
+    <ul>
+        <li>The chosen currency for the diagram is: {{ baseCurrency }}. Can be adapted on the Exchange rates page.</li>
+        <li>Use selection box to show/hide specifix months</li>
+        <li>Click on categories in legend to grey out categories</li>
+        
+    </ul>
+
+    <div class="mt-5 mb-5">
+        {{ div|safe }}
+        {{ script|safe }}
+
+    </div>
+
+    <div class="mt-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Category</th>
+                    {% for date in summation['dates'] %}
+                    <th class="text-center date-column">{{ date }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for key, values in category_exp.items() %}
+                <tr>
+                    <td style="width: 20px; height: 20px; background-color: {{ cat_colors[loop.index0] }}"></td>
+                    <td>{{ key }}</td>
+                    {% for value in values %}
+                    <td class="text-center"> {{ value|int }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot class="table-group-divider">
+                <tr>
+                    <td></td>
+                    <td>Total per month</td>
+                    {% for sum in summation['total'] %}
+                    <td class="text-center">{{ sum|int }}</th>
+                    {% endfor %}
+                </tr>
+            </tfoot>
+        </table>
+    
+{% endblock %}
