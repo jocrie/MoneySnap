@@ -1,11 +1,12 @@
 import sys
+import os
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from bson import ObjectId
 from helpers import exchangerate_api
 
-uri = "PutConnectionStringHere"
+uri = os.environ.get("MONGODB_URI")
 
 try:
 # Create a new client and connect to the server

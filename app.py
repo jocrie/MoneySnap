@@ -51,7 +51,7 @@ def register():
             flash("Provide username and matching passwords!")
             return redirect("/register")
 
-        password_hash = generate_password_hash(password)
+        password_hash = generate_password_hash(password, "pbkdf2")
         
         try:
             func_result = db_user_add(username, password_hash)
