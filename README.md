@@ -1,5 +1,6 @@
 # MoneySnap
 ## Video Demo:  https://youtu.be/RsCYeRrf0lM
+## Deployed: https://moneysnap.onrender.com
 ## General Description:
 The Expense Tracker App is a web application built with Flask, a Python web framework. This application helps users keep track of their expenses, manage categories, and visualize their spending habits through interactive diagrams.
 
