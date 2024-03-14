@@ -15,7 +15,7 @@ try:
   print("Pinged your deployment. You successfully connected to MongoDB!")
 except Exception as e:
     print(f"Error connecting to MongoDB: {e}")
-    sys.exit(1)
+    # sys.exit(1)
 
 # use a database named "myDatabase"
 db = client.myDatabase
